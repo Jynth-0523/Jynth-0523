@@ -1,8 +1,10 @@
 # Jingshi Xu
 
-I study economics and statistical science, with interests in empirical asset pricing,
-statistical learning, optimization, and reproducible research. I use coursework and
-projects to connect mathematical methods with working software.
+I focus on data science and computer science, with interests in machine learning,
+algorithm design, optimization, and reliable data systems. Drawing on my background
+in statistics and econometrics, I build reproducible data pipelines, predictive
+models, and interactive software. My projects connect mathematical reasoning with
+practical programming in Python, C++, R, SQL, and JavaScript/TypeScript.
 
 [Factor Discovery website](https://jynth-0523.github.io/) ·
 [Platform source and example CSV](https://github.com/Jynth-0523/Jynth-0523.github.io#try-it-with-a-ready-to-use-csv)
