@@ -7,12 +7,122 @@ projects to connect mathematical methods with working software.
 [Factor Discovery website](https://jynth-0523.github.io/) ·
 [Platform source and example CSV](https://github.com/Jynth-0523/Jynth-0523.github.io#try-it-with-a-ready-to-use-csv)
 
-## Algorithms and methods
-
 The sections below cover methods I have studied through coursework and used in
 research or software projects. I distinguish course foundations from applied work;
 my projects combine library implementations, custom numerical routines, and adapted
 open-source components where appropriate.
+
+[Computer science](#computer-science-algorithms-and-systems) ·
+[Statistical learning and optimization](#statistical-learning-and-optimization) ·
+[Projects](#selected-projects)
+
+## Computer science algorithms and systems
+
+### Sorting, searching, and data structures
+
+- **Insertion sort, bubble sort, optimized bubble sort, and selection sort:**
+  comparison-based sorting studied through C++ course examples, including
+  early termination and shrinking the unsorted boundary.
+- **Binary search:** locating an element in a sorted array in coursework;
+  finding a monotone price/inventory threshold in the Kaggriculture project.
+- **Array traversal and matrix algorithms:** indexed scans, elementwise addition,
+  and the three-loop matrix-multiplication algorithm in C++.
+- **Hash maps and hash sets:** keyed lookup, grouping, duplicate detection,
+  visited-state tracking, and reuse of computed results through standard containers.
+- **Composite-key indexing:** detecting duplicate entity-date observations and
+  mapping entity identifiers across adjacent periods.
+- **Bitmask state representation:** encoding visited task subsets, testing
+  membership, adding tasks, and enumerating complementary assignments.
+- **Sort-and-scan ranking:** sorting observations, grouping equal values, and
+  assigning average ranks to ties; explicit tie-breakers for planning candidates.
+
+### Combinatorial search and dynamic programming
+
+The [Kaggriculture project code](https://github.com/Jynth-0523/Kaggriculture/blob/main/main.py)
+contains several complementary planning techniques:
+
+- **Beam search:** expanding candidate action sequences and retaining a bounded
+  set of promising states under movement, time, and resource constraints.
+- **Subset dynamic programming:** storing the best route for a visited-task mask
+  and ending location, then extending it with feasible unvisited jobs.
+- **Dominance pruning:** retaining the shorter route for equivalent visited-set
+  and endpoint states when the model's resource and deadline assumptions permit it.
+- **Two-worker task partitioning:** combining complementary subsets and comparing
+  assignments by maximum completion time, then total work.
+- **Feasibility and lower-bound pruning:** rejecting states that exceed action
+  budgets or carried resources, including Manhattan-distance bounds for return trips.
+- **Bounded subset enumeration:** reconsidering small combinations of valuable
+  jobs beyond the initial greedy ordering.
+- **Greedy scoring and deterministic tie-breaking:** ranking action alternatives
+  by value, cost, timing, and consistent secondary criteria.
+- **Simulation-based local plan repair:** removing redundant commands or replacing
+  short schedules only after comparing their resulting state and resource balances.
+- **Memoization:** caching repeated schedule, transition, and market evaluations
+  within the appropriate state context.
+
+Earlier local planning experiments also explored **top-down recursive dynamic
+programming with memoization** for finite-horizon planting choices. That experimental
+planner is distinct from the published agent. The project integrates credited
+upstream code and route data; these methods are not a claim of training an online
+neural reinforcement-learning policy.
+
+### Streaming, parsing, and data-processing algorithms
+
+Applied in the [Factor Discovery browser worker](https://github.com/Jynth-0523/Jynth-0523.github.io/blob/main/web/app/factor-discovery.worker.ts):
+
+- **State-machine CSV parsing:** tracking quoted fields and escaped quotes while
+  preserving parsing state across input chunks.
+- **Incremental UTF-8 decoding and streaming scans:** processing file chunks,
+  retaining selected columns, and enforcing row and memory limits.
+- **Hash-based grouping and joins:** constructing period buckets and identifier
+  lookup tables without relying on row order to match entities.
+- **Indexed temporal traversal:** following aligned entity positions to compute
+  lags, changes, rolling means, and rolling volatility.
+- **Map/filter/reduce pipelines:** transforming observations, excluding invalid
+  values, aggregating results, and maintaining index alignment.
+- **Bounded combinatorial formula generation:** enumerating allowed unary and
+  pairwise operations, limiting search size, and deduplicating equivalent proposals.
+- **Structural and semantic validation:** checking operation allowlists, operand
+  arity, feature references, and typed proposal fields before evaluation.
+
+### Graph traversal, hashing, and integrity checks
+
+Applied in the platform's [runtime store](https://github.com/Jynth-0523/Jynth-0523.github.io/blob/main/backend/src/research_platform/store.py)
+and [integrity utilities](https://github.com/Jynth-0523/Jynth-0523.github.io/blob/main/backend/src/research_platform/util.py):
+
+- **Parent-link traversal with a visited set:** checking an audit chain for cycles,
+  missing parents, and records unreachable from its head.
+- **Canonical serialization:** sorting JSON keys and fixing encoding and separators
+  before computing content digests.
+- **SHA-256 hashing:** using standard-library implementations for file and artifact
+  integrity, including chunked hashing of larger files.
+- **Hash-linked audit records:** connecting successive result records and verifying
+  both their contents and predecessor references.
+- **Deterministic source-tree fingerprinting:** sorting relative file paths and
+  hashing length-delimited paths and contents.
+
+### Concurrency, persistence, and software construction
+
+These are systems techniques used alongside algorithms:
+
+- **Mutual exclusion:** nonblocking file locks for single-instance execution.
+- **Idempotent job claims:** exclusive creation, completion markers, and lease-based
+  stale-claim recovery within the platform's locking model.
+- **Atomic file publication:** temporary-file writes, flush/synchronization, atomic
+  replacement, and exclusive publication for records that must not be overwritten.
+- **Worker message passing and cooperative cancellation:** browser computation
+  separated from the interface, with progress messages and active-job checks.
+- **State-scoped caching and copy isolation:** invalidating cached evaluations when
+  observations change and copying mutable results before downstream use.
+- **Relational integrity and indexed retrieval:** PostgreSQL primary/composite keys,
+  secondary indexes, and bulk loading for research records.
+- **Finite-state workflows:** explicit review states, version-bound decisions,
+  rule checks, and human approval in research workflow software.
+- **C++ object and memory management:** dynamic two-dimensional arrays, constructors,
+  destructors, deep-copy construction, copy assignment, bounds checks, and operator
+  overloading in the matrix coursework.
+
+## Statistical learning and optimization
 
 ### Regression and predictive modeling
 
@@ -101,13 +211,6 @@ Related theoretical study includes Nash and subgame-perfect equilibrium, Bayesia
 and repeated games, bargaining, and incentive compatibility. These are foundations
 for decision models, not additional software algorithms.
 
-### Core programming algorithms
-
-C++ coursework covered insertion sort, bubble sort and an early-exit/shrinking-bound
-variant, selection sort, binary search, array traversal, and matrix addition and
-multiplication. I also practiced dynamic memory management and object-oriented
-matrix implementations.
-
 ### Search and planning in projects
 
 - **Factor discovery:** bounded formula enumeration, lag/change/rolling operators,
@@ -126,7 +229,7 @@ matrix implementations.
 | Project | Focus |
 | --- | --- |
 | [Factor Discovery Research Platform](https://github.com/Jynth-0523/Jynth-0523.github.io) | Browser-based factor discovery and validation, Python research operations, PostgreSQL records, and Tableau reporting |
-| [Kaggriculture](https://github.com/Jynth-0523/Kaggriculture) | Python strategy integration, constrained planning, and reproducible local comparisons |
+| [Kaggriculture](https://github.com/Jynth-0523/Kaggriculture) | Python strategy integration, beam search, subset dynamic programming, constrained scheduling, and reproducible local comparisons |
 | [Paper Reproduction using R](https://github.com/Jynth-0523/Paper-Reproduction-using-R) | Selected tables and figures from *The Rate of Return on Everything* |
 | [Economic Policy Uncertainty and Stock Return Volatility](https://github.com/Jynth-0523/The-Impact-of-EPU-on-Firm-Level-Stock-Return-Volatility_Evidence-from-U.S.-Firms) | Firm fixed-effects regressions, clustered inference, and specification checks |
 | [Research and Wealth Assistant Demo](https://github.com/Jynth-0523/kingstar-ai-demo) | Rule-based context checks, evidence review, and human approval workflows using synthetic examples |
